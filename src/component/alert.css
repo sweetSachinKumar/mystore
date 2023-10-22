@@ -1,0 +1,17 @@
+
+.showAlertNow{
+    animation: showAlert 1000ms ease-in-out ;
+
+    display: block;
+}
+@keyframes showAlert{
+    from{
+       opacity: .2;
+       top: 140px;
+    }
+  
+    to{
+       opacity: .8;
+       top: 99px;
+    }
+}
