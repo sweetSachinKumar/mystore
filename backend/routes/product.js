@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Product = require("../model/Products")
-
+const Cart = require("../model/cart")
 
 // router.post("/", async (req,res)=> {
 //     // let product = allProducts.slice(20)
@@ -59,9 +59,8 @@ router.get('/getProduct/:id', async (req, res)=> {
     try{
         const {id} = req.params
     
-        const oneProduct = await Product.find({_id:id})
+        const oneProduct = await Product.find({_id:id}) 
         const myProduct = oneProduct[0]
-    console.log(id, oneProduct)
         res.json({status:"ok", myProduct})
     }
     

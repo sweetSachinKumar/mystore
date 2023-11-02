@@ -2,7 +2,6 @@ import React  from 'react'
  
 const NewHeader = ({allProduct, queryProduct, setMyQuery}) => {
    
-  console.log(queryProduct[0]?.category)
 
   // ${queryProduct && queryProduct[0]?.category === tag ? "bg-neutral-800 hover:bg-neutral-900/80 text-slate-100" : "border border-neutral-800 text-neutral-800 "}
 

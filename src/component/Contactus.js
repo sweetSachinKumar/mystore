@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import cover from '../img/post.jpg'
 const Contactus = () => {
 
@@ -7,56 +6,49 @@ const Contactus = () => {
 
 
 
-const handleSubmit = (e)=> {
+  const handleSubmit = (e) => {
     e.preventDefault()
-}
+  }
 
 
 
 
   return (
-    <div>
-      
+   <div className='max-w-[1140px] mx-auto px-4 pt-32 pb-16'>
+    <h2 className='text-xl md:text-3xl text-center text-gray-700 font-bold'>Feel Free to Contact Us</h2>
+    <p className=' md:text-xl text-center text-gray-700 font-semibold pt-2 mb-8'>Send a message</p>
 
-      <div className='flex  pt-16 flex-col md:flex-row items-center justify-center h-screen px-9'>
+    <div className='flex gap-5 flex-col md:flex-row  max-w-[800px] mx-auto justify-around'>
 
-<div className=' m-4 p-1 h-full md:max-h-[500px] md:max-w-md max-h-[200px] w-full'>
-    <img src={cover} alt="cover" className=' p-2 w-full h-full object-cover object-center' />
-</div>
-
-
-    {/* box  */}
-   <div className=' h-[500px] max-w-md ml-4 mt-11 w-full '>
-   
-     <h2 className='text-center text-2xl font-bold tracking-tight text-gray-900'>Feel free to contact us </h2>
-     <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm '>
-         <form onSubmit={handleSubmit}  className=' space-y-6'>
-          
-           <div>
-             <label htmlFor="email" className='block text-sm font-medium leading-6 text-gray-900'>Email</label>
-             <input type="email" className='block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-200 sm:text-sm sm:leading-6' required name="" placeholder='enter your email' id="email" />
-           </div>
-           <div>
-             <label htmlFor="comment" className='block text-sm font-medium leading-6 text-gray-900'>Your comment</label>
-            <textarea name="" className='block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 focus:ring-2 focus:ring-inset focus:ring-orange-200  resize-none ' id="" cols="30" rows="10"></textarea>
-           </div>
-           
-           <div className='text-center'>
-             <button type='submit' className='  px-6 rounded-md bg-orange-600/80 hover:bg-orange-600/90 active:bg-orange-600/70 text-white py-1.5 text-sm font-semibold leading-6 shadow-sm ' >
-             submit
-             </button>
-           </div>
-         </form>
-   
-         
-         </div>
-         </div>
-    
-   
-   
-   
-       </div>
+      <img src={cover} className='h-[200px] md:h-[600px] rounded-md md:w-[400px] object-cover object-right-bottom w-full mb-5 ' alt="" />
+      <form onSubmit={handleSubmit} className='w-full'>
+        <div className='flex flex-col p-4'>
+        <div className='flex flex-col gap-1 m-2'>
+          <label htmlFor="">Your Name</label>
+          <input type="text" name="" className='border p-2 rounded-md' placeholder='enter your name' id="" />
+        </div>
+        <div className='flex flex-col gap-1 m-2 '>
+          <label htmlFor="">Email</label>
+          <input type="email"  className='border p-2 rounded-md '  placeholder='enter your email' name="" id="" />
+        </div>
+        <div className='flex flex-col gap-1 m-2 '>
+          <label htmlFor="">Phone no</label>
+          <input type="tel"  className='border p-2 rounded-md ' required  placeholder='enter your phone no.' name="" id="" />
+          <span className='text-xs md:text-sm text-gray-700'>in case if we would like to contact you</span>
+        </div>
+        
+        <div className='flex flex-col gap-1 m-2'>
+          <label htmlFor="">Your Comment</label>
+          <textarea name=""  className='border p-2 rounded-md ' placeholder='write comment' id="" cols="30" rows="10"></textarea>
+        </div>
+        
+          <button className='bg-neutral-700 hover:bg-neutral-700/80 active:bg-neutral-700/60 p-2 text-white rounded-md m-2'  type="submit">Submit</button>
+        
+        </div>
+      </form>
     </div>
+   </div>
+
   )
 }
 

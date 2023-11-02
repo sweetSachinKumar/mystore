@@ -4,3 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+ .slick-slide > div {
+         margin:0 10px;
+    }
+    

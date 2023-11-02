@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { fetchOneProduct, fetchProductByQuery } from '../slices/productApis'
@@ -6,32 +6,68 @@ import { useAddToCartMutation } from '../slices/cartSlice'
 
 import defatIMG from '../img/S.png'
 import Product from './Product'
+import { toast } from 'react-toastify'
+import Loading from './Loading'
 
 const ProductDetail = () => {
     const queryProduct = useSelector(state => state.myProduct.productsQuery?.mydata)
-
-    const [addToCart] = useAddToCartMutation()
+    // const [myProducts, setMyProducts] = useState()
+    const [addToCart, result] = useAddToCartMutation()
     const { id: urlId } = useParams()
+    const {isSuccess, isError, error } = result
+    // too much rereding after click on product eye for more information ;::: that's why  alert is off now
+useEffect(()=> { 
+    if(isSuccess){
+        toast.success('added to cart', {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      }
+
+      if(isError){
+        toast.info(error.data.error, {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
+      }
+
+    },[result])
 
 
     const dispatch = useDispatch()
     const myProducts = useSelector(state => state.myProduct.singleProduct)
     const myproductStatus = useSelector(state => state.myProduct)
     const myQuery = myProducts?.category
+    
 
     useEffect(() => {
         dispatch(fetchOneProduct(urlId))
     }, [])
+    useEffect(() => {
+        dispatch(fetchOneProduct(urlId))
+    }, [urlId])
 
     useEffect(() => {
         dispatch(fetchProductByQuery(myQuery))
       }, [myQuery])
 
     return (
-        <>
+        <div className='min-h-[80vh] h-full'>
             <Link to="/" className='bg-slate-800 hover:bg-slate-800/70 active:bg-slate-800/90 text-white px-4 py-1 text-xl absolute top-24 left-6 rounded'> &larr;  go to home </Link>
             <Link to="/gotocart" className='bg-slate-800 hover:bg-slate-800/70 active:bg-slate-800/90 text-white px-4 py-1 text-xl absolute top-24 right-6 rounded'>   go to cart &rarr;</Link>
-            {myproductStatus.loading && <h2>Loading...</h2>}
+            {myproductStatus.loading && <Loading/>}
             {myproductStatus.error && <h2>{myproductStatus.error}</h2>}
             {
                 myProducts &&
@@ -81,7 +117,7 @@ const ProductDetail = () => {
 
 
 
-        </>
+        </div>
     )
 }
 

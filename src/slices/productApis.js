@@ -14,7 +14,6 @@ export const fetchOneProduct = createAsyncThunk(
     async (id)=> {
         let data = await fetch(`http://localhost:4000/product/getProduct/${id}`)
         let fetchData = await data.json()
-
         return fetchData
     }
 )
@@ -50,7 +49,7 @@ export const arrengedProducts = createAsyncThunk(
 export const fetchProductByQuery = createAsyncThunk(
     'products/fetchProductByquery',
     async (category) => {
-        let mydata = await fetch(`http://localhost:4000/product/?category=${category}`)
+        let mydata = await fetch(`http://localhost:4000/product/?category=${category}&sort=price`)
         let mainDatas = await mydata.json()
 
         return mainDatas

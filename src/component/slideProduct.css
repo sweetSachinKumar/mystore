@@ -1,0 +1,13 @@
+
+@media (max-width:700px){
+    .slick-next {
+        right: 25px;
+        z-index: 22;
+    }
+    .slick-prev {
+        left: 25px;
+        z-index: 22;
+
+    }
+
+}

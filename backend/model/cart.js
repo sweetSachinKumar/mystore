@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const cartSchema =  new mongoose.Schema({
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"user"
+    }  ,
     title: {
         type:String,
         required:true
@@ -9,6 +13,7 @@ const cartSchema =  new mongoose.Schema({
         type:Number,
         default: 1
     },
+    
     description: {
         type:String,
         required:true

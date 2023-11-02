@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const Banner = () => {
   return (
     <>
- <section  className='  justify-around flex   items-center h-[340px] md:h-[500px] lg:h-[80vh] -ml-2 -mt-3 px-6 overflow-hidden bg-orange-600/40'>
+ <section  className='  justify-around flex   items-center h-[440px] md:h-[500px] lg:h-[80vh] -ml-2 -mt-3 px-6 overflow-hidden bg-orange-600/40'>
         <div>
             <div className='flex items-center text-xs md:text-base uppercase'>
                 <div className='w-9 bg-red-500 mr-2 h-0.5'></div>
