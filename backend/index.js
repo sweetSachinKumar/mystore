@@ -8,9 +8,9 @@ const connectDB = require("./db")
 const cors = require("cors")
 app.use(cors(
     {
-        // origin: "https://hotel-backend-xi.vercel.app",
-        // methods: ["POST", "GET", "DELETE", "PUT"],
-        // credentials: true
+        origin: "https://hotel-backend-xi.vercel.app",
+        methods: ["POST", "GET", "DELETE", "PUT"],
+        credentials: true
       }
 ))
 app.use(express.json({ limit: "25mb" }))
