@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import {} from "@reduxjs/toolkit/query/react"
+import { toast } from "react-toastify"
 
 const initialState = {
-    authToken: ``,
+    authToken: localStorage.getItem('token'),
     user: {},
-    isUser:false
+    isUser:false,
+    allUserData:[],
+    vender:false
 }
 
 export const createUser = createAsyncThunk(
@@ -17,6 +19,24 @@ export const createUser = createAsyncThunk(
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({name, email, password})
+        })
+        
+        let data = await mytoken.json()
+        return data
+    }
+)
+
+
+export const removeUser = createAsyncThunk(
+    'auth/removeUser',
+    async (id)=> {
+       
+        const mytoken = await fetch(`http://localhost:4000/auth/removeuser/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            
         })
         
         let data = await mytoken.json()
@@ -60,13 +80,29 @@ export const getaUserData = createAsyncThunk(
 )
 
 
+export const getallUser = createAsyncThunk(
+    'auth/getallUser',
+    async (page) => {
+        const userData = await fetch(`http://localhost:4000/auth/getalluser?page=${page}`, {
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json",
+                
+            }
+        })
+        let userInfo = await userData.json()
+        return userInfo
+    }
+)
+
+
 
  const authentication = createSlice({
     name:"auth",
     initialState,
     reducers:{
         setTokenId: (state)=>{
-            if(!state.authToken){
+            if(!state.authToken && !state.vernder){
                 if( localStorage.getItem('token') !== null){
                     state.authToken = localStorage.getItem('token')
                     state.isUser = true
@@ -75,10 +111,18 @@ export const getaUserData = createAsyncThunk(
                 }
             }else {
                 if(state.isUser){
-                    state.isUser = true
+                    state.isUser = false
+                    state.vender = false
                 }
             }
         
+        },
+        setVender: (state, action) => {
+            state.vender = true
+            state.isUser = false
+        },
+        removeVender: (state, action) => {
+            state.vender = false
         },
         logOutbtn: (state)=> {
             if(localStorage.getItem('token') !== null && state.isUser){
@@ -97,7 +141,6 @@ export const getaUserData = createAsyncThunk(
          
         })
         .addCase(loginUser.fulfilled, (state, action)=> {
-            console.log(action.payload)
             if(action.payload.error) console.log(action.payload.error)
             // if(action.payload.authtoken) state.authToken = action.payload.authtoken
             if(action.payload.authtoken)  localStorage.setItem('token', action.payload.authtoken)
@@ -107,13 +150,31 @@ export const getaUserData = createAsyncThunk(
         .addCase(getaUserData.fulfilled, (state,action)=>{
             if(action.payload.error) console.log(action.payload.error)
             if(action.payload.success) state.isUser = action.payload.success 
-            console.log(action.payload)
             if(action.payload.user) state.user = action.payload.user
+
+        })
+        .addCase(getallUser.fulfilled, (state,action)=>{
+            if(action.payload.error) console.log(action.payload.error)
+            if(action.payload.success) state.isUser = action.payload.success 
+            state.allUserData = action.payload
+
+        })
+        .addCase(removeUser.fulfilled, (state,action)=>{
+            toast.success('user is removed ', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
 
         })
     }
 })
 
-export const {setTokenId, logOutbtn} = authentication.actions
+export const {setTokenId, logOutbtn, setVender, removeVender} = authentication.actions
 
 export default authentication.reducer

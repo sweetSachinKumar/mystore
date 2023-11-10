@@ -18,7 +18,7 @@ const cartApi = createApi({
             
             providesTags: ["cart"]
         }),
-        addToCart: builder.mutation({
+       addToCart: builder.mutation({
             query: (product) => ({
                 url: 'cart/addtocart',
                 method: 'post',
@@ -41,10 +41,18 @@ const cartApi = createApi({
             }),
             invalidatesTags: ["cart"]
         }),
+        oneCart: builder.mutation({
+            query: (urlId)=> ({
+                url: `cart/getCart/${urlId}`,
+                method: 'post'
+            }),
+            invalidatesTags: ["cart"]
+
+        })
 
     })
 })
 
-export const { useGetAllCartQuery, useAddToCartMutation, useRemoveFromCartMutation, useUpdateCartMutation } = cartApi
+export const { useGetAllCartQuery, useAddToCartMutation, useRemoveFromCartMutation, useUpdateCartMutation, useOneCartMutation } = cartApi
 
 export default cartApi

@@ -37,9 +37,7 @@ const submit = async (data) =>{
         theme: "light",
         });
     }
-    else{
-      console.log(auth)
-    }
+   
   }}
 
 

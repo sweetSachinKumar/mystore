@@ -157,7 +157,7 @@ router.get("/", async (req, res)=> {
         myQuery = myQuery.select(selectFix)   
     }
     // let page = Number(req.query.page) || 1
-    // let limit = Number(req.query.limit) || 8
+    // let limit = Number(req.query.limit) || 18
 
     // let skip = (page-1)*limit
 
@@ -170,6 +170,103 @@ router.get("/", async (req, res)=> {
     // res.json({ totalResult: mydata.length , pageNo: page, status:"OK", mydata})
     res.json({ totalResult: mydata.length , status:"OK", mydata})
 })
+
+
+
+router.get("/fetchAllProduct", async (req, res)=> {
+
+    const {title, description, price, brand,category, sort, select} = req.query
+    const myquery = {}
+
+    if(title){
+        myquery.title = {$regex: title, $options: 'i'} 
+    }
+    if(description){
+        myquery.description =  {$regex: description, $options: 'i'}
+    }
+    if(price){
+        myquery.price = price 
+    }
+    if(brand){
+        myquery.brand = brand 
+    }
+    if(category){
+        myquery.category = category
+    }
+    
+    let myQuery =   Product.find(myquery)
+    
+    let DataLength = await Product.find({})
+  
+    if(sort){
+        const sortFix = sort.replace(","," ")
+        myQuery = myQuery.sort(sortFix)   
+    }
+    if(select){
+        // const selectFix = select.replace(","," ")
+        const selectFix = select.split(",").join(" ")
+        myQuery = myQuery.select(selectFix)   
+    }
+  
+    
+    let page = Number(req.query.page) || 1
+    let limit = Number(req.query.limit) || 18
+
+    let skip = (page-1)*limit
+
+    myQuery = myQuery.skip(skip).limit(limit)
+
+
+
+    let mydata = await myQuery
+    console.log(DataLength.length, mydata.length)
+    // res.json({ totalResult: mydata.length , pageNo: page, status:"OK", mydata})
+    res.json({ totalResult: mydata.length , status:"OK", mydata, DataLength:DataLength.length})
+})
+
+
+
+
+
+
+// url for delete a cart by id 
+router.delete("/removeproduct/:id", async (req, res)=> {
+    const urlId = req.params.id
+    try{
+        let removeproduct = await Product.findById(urlId)
+        
+        
+        // first find the  product is exist or not
+        if(!removeproduct) {
+            return res.status(404).json({status:'Not found'})
+        }
+  
+
+
+     removeproduct = await Product.findByIdAndDelete(urlId)
+    res.json({status :"removed successfully", removeproduct})
+}
+
+catch (err){
+    res.json({error:"some error occuerd"})
+}
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router

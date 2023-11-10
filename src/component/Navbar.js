@@ -4,7 +4,7 @@ import {BsPersonFill} from 'react-icons/bs'
 import { Link, useLocation } from 'react-router-dom'
 import { useGetAllCartQuery } from '../slices/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { logOutbtn, setTokenId } from '../slices/AuthSlice'
+import { getaUserData, logOutbtn, setTokenId } from '../slices/AuthSlice'
 import { toast } from 'react-toastify'
 
 
@@ -19,8 +19,7 @@ const Navbar = () => {
     { item: "Contact Us", togo: "/contact" },
     { item: "Blog", togo: "/blog" },
   ]
-  const checkUser = useSelector(state => state.auth.isUser)
-
+  const checkUser = useSelector(state => state.auth.authToken)
   const handleLogout = () => {
     dispatch(logOutbtn()) 
     toast.success("you are logged out")
@@ -31,10 +30,16 @@ const Navbar = () => {
 //   const tokens = useSelector(state => state.auth.authToken)
   
   useEffect(()=>{
-    console.log("navbar")
+    dispatch(getaUserData())
     
   dispatch(setTokenId())
 },[])
+
+
+useEffect(  ()=> { 
+ 
+}, [])
+
   return (
     <>
       <div className='z-30 shadow shadow-neutral-800/10 transition-shadow fixed left-0 right-0 top-0 bg-neutral-100/80 w-full'>
@@ -61,8 +66,7 @@ const Navbar = () => {
           <Link to="/gotocart" className=' hover:text-neutral-700/80  transition active:text-neutral-950/70 text-neutral-800  text-xl px-6 py-1 rounded-md relative' >
               
               <IoMdCart size={30}/> 
-               {(data && checkUser ) && <span className='text-neutral-100 font-bold font-mono bg-orange-600/80  px-2 rounded-xl absolute z-40 -bottom-1 right-3'>{data?.allcartItem
-.length }</span>}
+               {(data && checkUser ) && <span className='text-neutral-100 font-bold font-mono bg-orange-600/80  px-2 rounded-xl absolute z-40 -bottom-1 right-3'>{data?.allcartItem?.length }</span>}
               
               </Link>
 

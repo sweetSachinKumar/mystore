@@ -8,9 +8,9 @@ const connectDB = require("./db")
 const cors = require("cors")
 app.use(cors(
     {
-        origin: "https://hotel-backend-xi.vercel.app",
-        methods: ["POST", "GET", "DELETE", "PUT"],
-        credentials: true
+        // origin: "https://hotel-backend-xi.vercel.app",
+        // methods: ["POST", "GET", "DELETE", "PUT"],
+        // credentials: true
       }
 ))
 app.use(express.json({ limit: "25mb" }))
@@ -18,6 +18,7 @@ app.use(express.json({ limit: "25mb" }))
 app.use("/product/", require('./routes/product'))
 app.use("/cart/", require("./routes/Cart2"))
 app.use("/auth", require("./routes/user"))
+app.use("/order", require("./routes/order"))
 let url = process.env.MONGODB_URL
 
 
@@ -28,10 +29,10 @@ app.get("/", (req, res)=> {
 const startServer = async ()=> {
     try{
 
-    await connectDB(process.env.MONGODB_URL)
-    app.listen(PORT, ()=> {
-    console.log(`this port is running on http://localhost:${PORT}`)
-})
+        await connectDB(process.env.MONGODB_URL)
+        app.listen(PORT, ()=> {
+        console.log(`this port is running on http://localhost:${PORT}`)
+    })
     } 
     catch (err){
         console.log(err)
@@ -41,3 +42,6 @@ const startServer = async ()=> {
 
 
 startServer()
+
+// app.listen(PORT, ()=> console.log(`this port is running on http://localhost:${PORT}`) )
+// connectDB(process.env.MONGODB_URL)

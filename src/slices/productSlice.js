@@ -26,4 +26,7 @@ endpoints: (builder)=> ({
 })
 })
 
+
+
+
 export const {useGetAllProductQuery, useGetAllCategoriesedProductQuery, useGetAllSelectedProductQuery} = productApi

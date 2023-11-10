@@ -1,6 +1,8 @@
 import cartApi from "../slices/cartSlice";
 import productApis from "../slices/productApis";
 import authentication from "../slices/AuthSlice";
+import authApi from "../slices/AuthApis";
+import orderSlice from "../component/order/orderSlice";
 
 
 const { configureStore } = require("@reduxjs/toolkit");
@@ -16,12 +18,14 @@ const { configureStore } = require("@reduxjs/toolkit");
 // })
 const store = configureStore({
     reducer:{
+        orderData: orderSlice  ,
         [cartApi.reducerPath]: cartApi.reducer,
         myProduct: productApis,
-        auth: authentication
+        auth: authentication,
+        [authApi.reducerPath]: authApi.reducer
 
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cartApi.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cartApi.middleware, authApi.middleware)
 })
 
 export default store

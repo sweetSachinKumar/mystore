@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { toast } from "react-toastify"
 
 
 const initialState = {
@@ -6,13 +7,23 @@ const initialState = {
     arrengedProduct: [],
     singleProduct: {},
     products:{},
-    productsQuery:{}
+    productsQuery:{},
+    Allproducts:[]
 }
 
 export const fetchOneProduct = createAsyncThunk(
     'products/oneProduct',
     async (id)=> {
         let data = await fetch(`http://localhost:4000/product/getProduct/${id}`)
+        let fetchData = await data.json()
+        return fetchData
+    }
+)
+
+export const removeProduct = createAsyncThunk(
+    'products/removeProduct',
+    async (id)=> {
+        let data = await fetch(`http://localhost:4000/product/removeproduct/${id}`)
         let fetchData = await data.json()
         return fetchData
     }
@@ -27,6 +38,20 @@ export const fetchOneCTGProduct = createAsyncThunk(
         return fetchData
     }
 )
+export const fetchAllProduct = createAsyncThunk(
+    'products/fetchAllProduct',
+    async (page)=> {
+        let data = await fetch(`http://localhost:4000/product/fetchAllProduct?page=${page}`)
+        let fetchData = await data.json()
+
+        return fetchData
+    }
+)
+
+
+
+
+
 export const fetchCTGRiProductarr = createAsyncThunk(
     'products/categoryArr',
     async ()=> {
@@ -68,7 +93,6 @@ export const productApis = createSlice({
             state.loading = true
         })
         .addCase(fetchOneProduct.fulfilled, (state, action)=> {
-            console.log(action.payload)
             state.loading = false
             state.error = false
             state.singleProduct = action.payload.myProduct
@@ -83,10 +107,18 @@ export const productApis = createSlice({
             state.loading = true
         })
         .addCase(fetchOneCTGProduct.fulfilled, (state, action)=> {
-            console.log(action.payload)
             state.loading = false
             state.error = false
             state.products = action.payload.myProduct
+
+        })
+        .addCase(fetchAllProduct.pending, (state, action)=> {
+            state.loading = true
+        })
+        .addCase(fetchAllProduct.fulfilled, (state, action)=> {
+            state.loading = false
+            state.error = false
+            state.Allproducts = action.payload
 
         })
         .addCase(fetchOneCTGProduct.rejected, (state, action)=> { 
@@ -114,7 +146,6 @@ export const productApis = createSlice({
 
         }).addCase(fetchProductByQuery.fulfilled, (state, action)=> {
             state.productsQuery = action.payload
-            console.log(action.payload)
             state.loading = false
             state.error = false
         })
@@ -125,6 +156,9 @@ export const productApis = createSlice({
         .addCase(fetchProductByQuery.rejected, (state, action)=> {
             state.error = action.error.message
             state.loading = false
+        })
+        .addCase(removeProduct.fulfilled, (state, action)=> {
+          toast.success("product deleted ")
         })
        
     }

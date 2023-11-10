@@ -9,8 +9,20 @@ const fetchuser = require("../middleware/fetchuser")
 const JWT_SECRET = "sldkf@534k3jfsi"
 // get user
 router.post('/getAllUser', async (req, res)=> {
-    const users = await User.find({})
-    res.json({status:"ok", users})
+  try{  
+    let myQuery =  User.find({}).sort("-date")
+    let userLength = await User.find({})
+    let page = Number(req.query.page) || 1
+    let limit = Number(req.query.limit) || 12
+    let skip = (page-1)*limit
+    myQuery = myQuery.skip(skip).limit(limit)
+
+    const userData = await myQuery
+    res.json({dataLength: userLength.length, status:"ok", userData})
+  }
+    catch (err){
+        return res.status(500).json({error: "internal server error"})
+    }
 
     
 })
@@ -117,6 +129,28 @@ router.post('/getaUser',fetchuser, async (req, res)=> {
 
 })
 
+
+
+
+// url for delete a cart by id 
+router.delete("/removeuser/:id", async (req, res)=> {
+    const urlId = req.params.id
+    try{
+        let removeUser = await User.findById(urlId)
+         
+        // first find the  user is exist or not
+        if(!removeUser) {
+            return res.status(404).json({status:'Not found'})
+        }
+
+     removeUser = await User.findByIdAndDelete(urlId)
+    res.json({status :"removed successfully", removeUser})
+}
+
+catch (err){
+    res.json({error:"some error occuerd"})
+}
+})
 
 
 

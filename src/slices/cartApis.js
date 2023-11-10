@@ -13,7 +13,7 @@ export const fetchAllCart = createAsyncThunk(
             method: "GET",
             headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUzOTlmYWY0ZDUwZWNmYzMwMjI0NDMwIn0sImlhdCI6MTY5ODI3NjcyM30.bMn1fXxfBKpMmY2mV_4pW_QnRjKh72JSzcTqtB9ZwEU"
+        "auth-token": localStorage.getItem('token')
             }
         })
         let data = response.json()
@@ -74,7 +74,6 @@ export const addCart = createAsyncThunk(
         builder
         .addCase(fetchAllCart.fulfilled, (state, action)=>{
             state.cart = action.payload
-            // console.log(action.payload)
         })
         .addCase(fetchAllCart.rejected, (state, action)=>{
             console.log(action.error.message)

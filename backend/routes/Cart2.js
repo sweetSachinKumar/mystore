@@ -17,6 +17,28 @@ catch (err){
 })
 
 
+router.post('/getCart/:id',fetchuser, async (req, res)=> {
+    try{
+    const urlId = req.params.id
+
+        let getItem = await Cart.findById(urlId)
+
+
+        if(!getItem) {
+         return res.status(404).json({status:'Not found'})
+        }
+    
+        if(getItem.user.toString() !== req.user.id){
+            return res.status(401).json({status:"Not Allowed!"})
+        }
+    res.json({status:"ok", getItem})
+
+    }
+    catch(err){
+        res.json({error:"some error occuerd"})
+    }
+})
+
 
 
  

@@ -35,9 +35,7 @@ const Login = () => {
           theme: "light",
           });
       }
-      else{
-        console.log(auth)
-      }
+    
     }}
 
 
