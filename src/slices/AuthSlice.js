@@ -3,10 +3,10 @@ import { toast } from "react-toastify"
 
 const initialState = {
     authToken: localStorage.getItem('token'),
-    user: {},
+    user: JSON.parse(localStorage.getItem('user')),
     isUser:false,
     allUserData:[],
-    vender:false
+    vender: JSON.parse(localStorage.getItem('vender'))
 }
 
 export const createUser = createAsyncThunk(
@@ -58,7 +58,7 @@ export const loginUser = createAsyncThunk(
             },
             body: JSON.stringify({password, email})
         })
-        
+    
         let data = await mytoken.json()
         return data
     }
@@ -102,7 +102,7 @@ export const getallUser = createAsyncThunk(
     initialState,
     reducers:{
         setTokenId: (state)=>{
-            if(!state.authToken && !state.vernder){
+            if(!state.authToken && !state.vender){
                 if( localStorage.getItem('token') !== null){
                     state.authToken = localStorage.getItem('token')
                     state.isUser = true
@@ -118,19 +118,27 @@ export const getallUser = createAsyncThunk(
         
         },
         setVender: (state, action) => {
-            state.vender = true
-            state.isUser = false
+            localStorage.setItem('vender',true)
+            state.vender = JSON.parse(localStorage.getItem("vender"))
+            state.isUser = false 
         },
         removeVender: (state, action) => {
-            state.vender = false
+            state.vender = false 
+            state.vender = localStorage.removeItem('vender')
+
         },
         logOutbtn: (state)=> {
-            if(localStorage.getItem('token') !== null && state.isUser){
-                localStorage.removeItem('token')
+         
+              state.authToken=  localStorage.removeItem('token')
+                state.user =  localStorage.removeItem("user");
+            state.vender = localStorage.removeItem('vender')
+
                 state.isUser = false
-                state.authToken = ""
-            }
           
+        },
+        getUserInfo: (state, action) => {
+
+                state.user =  JSON.parse(localStorage.getItem('user'))
         }
     },
     extraReducers: (builder)=> {
@@ -138,6 +146,12 @@ export const getallUser = createAsyncThunk(
         .addCase(createUser.fulfilled, (state, action)=> {
             if(action.payload.authtoken)  localStorage.setItem('token', action.payload.authtoken)
             if(action.payload.success) state.isUser = action.payload.success 
+            if(action.payload.user){
+                const {date,email, name, _id} = action.payload.user
+                let userdata = {date, email, name, _id}
+                let userJSON = JSON.stringify(userdata)
+                localStorage.setItem("user", userJSON)
+            }
          
         })
         .addCase(loginUser.fulfilled, (state, action)=> {
@@ -145,12 +159,21 @@ export const getallUser = createAsyncThunk(
             // if(action.payload.authtoken) state.authToken = action.payload.authtoken
             if(action.payload.authtoken)  localStorage.setItem('token', action.payload.authtoken)
             if(action.payload.success) state.isUser = action.payload.success 
+            if(action.payload.user){
+                const {date,email, name, _id} = action.payload.user
+                let userdata = {date, email, name, _id}
+                let userJSON = JSON.stringify(userdata)
+                localStorage.setItem("user", userJSON)
+            }
+
          
         })
         .addCase(getaUserData.fulfilled, (state,action)=>{
             if(action.payload.error) console.log(action.payload.error)
             if(action.payload.success) state.isUser = action.payload.success 
             if(action.payload.user) state.user = action.payload.user
+            console.log(action.payload)
+
 
         })
         .addCase(getallUser.fulfilled, (state,action)=>{
@@ -175,6 +198,6 @@ export const getallUser = createAsyncThunk(
     }
 })
 
-export const {setTokenId, logOutbtn, setVender, removeVender} = authentication.actions
+export const {setTokenId, logOutbtn, setVender, removeVender, getUserInfo} = authentication.actions
 
 export default authentication.reducer

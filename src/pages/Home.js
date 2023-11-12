@@ -12,6 +12,8 @@ const Home = () => {
   const dispatch = useDispatch()
   const mainProduct = useSelector(state => state.myProduct.arrengedProduct)
   const myproductStatus = useSelector(state => state.myProduct)
+
+  console.log(myproductStatus)
   useEffect(() => {
     dispatch(fetchOneProduct())
     dispatch(fetchCTGRiProductarr())

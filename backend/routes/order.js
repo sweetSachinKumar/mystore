@@ -84,7 +84,7 @@ router.post("/addtoorder",fetchuser, [
             // if there are errors then return bad request  and error
            
 
-            const {username, address, phone, price, quantity, thumbnail, title,shipping} = req.body
+            const {username, address, phone, price, quantity, thumbnail, title,shipping, payment} = req.body
 console.log(req.body)
     try{
 
@@ -94,7 +94,7 @@ console.log(req.body)
     
 //     for(let item of req.body){
     //     console.log(item)
-      const   addtoorder = await Order.create({username, address, phone, price, quantity, thumbnail, title,shipping, user: req.user.id})
+      const   addtoorder = await Order.create({username, address, phone, price, quantity, thumbnail, title,shipping, payment, user: req.user.id})
 //     }
 
 

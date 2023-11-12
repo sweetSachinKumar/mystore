@@ -6,13 +6,7 @@ const app = express()
 const PORT = 4000 || process.env.PORT 
 const connectDB = require("./db")
 const cors = require("cors")
-app.use(cors(
-    {
-        // origin: "https://hotel-backend-xi.vercel.app",
-        // methods: ["POST", "GET", "DELETE", "PUT"],
-        // credentials: true
-      }
-))
+app.use(cors())
 app.use(express.json({}))
  
 app.use("/product/", require('./routes/product'))

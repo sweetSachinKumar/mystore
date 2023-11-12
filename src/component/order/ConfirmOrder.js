@@ -4,6 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import SuborderItem from './SuborderItem'
 import { TotalMoney, orderPrice, allOrderItems } from './orderSlice'
 
+import {MdLocalShipping}  from 'react-icons/md'
+import {BiCartDownload}  from 'react-icons/bi'
+import {RiBankFill}  from 'react-icons/ri'
+
 const ConfirmOrder = () => {
   const orderData = useSelector(state => state.orderData?.shippingData)
   const orderItems = useSelector(state => state.orderData?.orderItems)
@@ -47,17 +51,17 @@ const dispatch = useDispatch()
   <div className="flex h-[15vh] items-center justify-center">
     <div className="relative mx-auto flex  sm:w-[89%] w-full items-center justify-between">
       <div className="relative bg-white p-3">
-        <span className="text-xl text-orange-500 md:text-2xl"> ss</span>
+        <span className="text-xl text-orange-500 md:text-2xl"> <MdLocalShipping/></span>
         <p className="absolute -left-4 top-12 w-32 text-xs font-semibold text-neutral-700">shipping Detail</p>
       </div>
 
       <div className="relative bg-white p-3">
-        <span className="text-xl text-orange-500 md:text-2xl"> mm </span>
+        <span className="text-xl text-orange-500 md:text-2xl"> <BiCartDownload/> </span>
         <p className="absolute -left-4 top-12 w-32 text-xs font-semibold text-neutral-700">Confirm Order</p>
       </div>
 
       <div className="relative bg-white p-3">
-        <span className="text-xl text-gray-500/80 md:text-2xl"> lls </span>
+        <span className="text-xl text-gray-500/80 md:text-2xl"> <RiBankFill/> </span>
         <p className="absolute -left-4 top-12 w-32 text-xs font-semibold text-neutral-700">Payment</p>
       </div>
 

@@ -1,11 +1,11 @@
 import React from 'react'
-import { AiFillBank } from 'react-icons/ai'
-import { RiTruckFill } from 'react-icons/ri'
-import { MdLibraryAddCheck } from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 
+import {MdLocalShipping}  from 'react-icons/md'
+import {BiCartDownload}  from 'react-icons/bi'
+import {RiBankFill}  from 'react-icons/ri'
 import { addtoShipping } from './orderSlice'
 
 
@@ -35,17 +35,17 @@ const Shipping = () => {
         <div className="flex h-[15vh] items-center justify-center container mx-auto">
           <div className="relative mx-auto flex  sm:w-[89%] w-full items-center justify-between">
             <div className="relative bg-white p-3">
-              <span className="text-orange-600 text-xl md:text-2xl"> <RiTruckFill /> </span>
+              <span className="text-orange-600 text-xl md:text-2xl"> <MdLocalShipping/></span>
               <p className="absolute -left-4 top-12 w-32 text-xs text-neutral-700 font-semibold">shipping Detail</p>
             </div>
 
             <div className="relative bg-white p-3">
-              <span className="text-gray-500/80 text-xl md:text-2xl"> <MdLibraryAddCheck /> </span>
+              <span className="text-gray-500/80 text-xl md:text-2xl"> <BiCartDownload/></span>
               <p className="absolute -left-4 top-12 w-32 text-xs text-neutral-700 font-semibold">Confirm Order</p>
             </div>
 
             <div className="relative bg-white p-3">
-              <span className="text-gray-500/80 text-xl md:text-2xl"> <AiFillBank /> </span>
+              <span className="text-gray-500/80 text-xl md:text-2xl"> <RiBankFill/> </span>
               <p className="absolute -left-4 top-12 w-32 text-xs text-neutral-700 font-semibold">Payment</p>
             </div>
             {/* <!-- indicator  --> */}

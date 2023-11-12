@@ -8,7 +8,7 @@ const fetchuser = (req, res, next)=>{
     const token = req.header('auth-token')
     try{
     if(!token){
-        res.status(401).json({success: false, error: "No Account! Sign up Now."})
+       return res.status(401).json({success: false, error: "No Account! Sign up Now."})
     }
    
     const data = jwt.verify(token, JWT_SECRET)
@@ -17,7 +17,7 @@ const fetchuser = (req, res, next)=>{
 
     next()
     }  catch(err){
-        res.status(500).json({success: false, error:"No any Account! Sign Up Now"})
+      return  res.status(500).json({success: false, error:"No any Account! Sign Up Now"})
         // console.log(err)
     
         }

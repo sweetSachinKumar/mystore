@@ -7,10 +7,15 @@ const OrderAll = () => {
 
 const dispatch = useDispatch()
 const allData = useSelector(state =>  state.orderData?.fetchOrder)
+
+const allOrders = allData?.allorders?.filter(item => item.orderStatus !== "deleverd"  )
+
+console.log(allOrders)
+
+dispatch(adminOrder())
     
-    useEffect(()=> {
-        dispatch(adminOrder())
-    },[])
+  
+
 
   return (
     <div className='py-12 mb-32 overflow-auto   sm:w-full w-full h-full' >
@@ -27,7 +32,8 @@ const allData = useSelector(state =>  state.orderData?.fetchOrder)
                 </thead>
                 <tbody>
                     {
-                        allData?.allorders?.map(order => {
+                        allData?.allorders &&
+                        allOrders?.map(order => {
                             return (
                              <tr className="grid grid-cols-12 gap-3 even:bg-gray-500/10 odd:bg-transparent p-1">
                                 <td className="col-span-3 break-words text-left ps-3"><Link to={`/orderdetails/${order._id}`}>{order._id}</Link> </td>

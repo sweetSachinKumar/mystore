@@ -16,7 +16,7 @@ const Login = () => {
     let auth = await dispatch(loginUser(data))
     if(auth.payload){
       if(auth.payload.success){
-        navigate("/")
+        navigate("/")   
         let name = auth.payload.user.name
         toast.success(`${name}, you are success fully logged in`)
   dispatch(setTokenId())

@@ -15,7 +15,7 @@ const CartItem = () => {
   const { data, isLoading, isError } = useGetAllCartQuery()
   const checkUser = useSelector(state => state.auth.authToken)
 
-  console.log(Object.keys(mainProduct).length)
+  console.log(Object.keys(mainProduct)?.length)
   const dispatch = useDispatch()
 
 
@@ -34,26 +34,27 @@ const shopNow = ()=> {
     setTotal(totals)
   }, [data])
 
+
+
   return (
     <div className='py-8 min-h-[80vh] h-full  xl:container sm:px-2 mt-12 mx-auto '>
 
 
       {isLoading && <Loading />}
-
-      {/* { Object.keys(mainProduct).length <1  && <MyError/> } */}
-      { isError  && <MyError/> }
-      
       
       {
+      
         checkUser ?
         <>
-          <div className='grid grid-cols-1 xl:grid-cols-12 gap-8 '>
+         { isError  ? <MyError/> :
+         
+         <div className='grid grid-cols-1 xl:grid-cols-12 gap-8 '>
           <div className='container px-5 mx-auto col-span-1 xl:col-span-8'>
               {
                 data &&
-                data.allcartItem.length === 0? <ZeroItemMSG/> :
+                data.allcartItem?.length === 0? <ZeroItemMSG/> :
 
-                data?.allcartItem.map(item => <Cart item={item} />)
+                data?.allcartItem?.map(item => <Cart item={item} />)
               }
             </div>
             <div className='col-span-1 xl:col-span-4'>
@@ -68,12 +69,12 @@ const shopNow = ()=> {
               }
             </div>
            
-          </div>
+          </div>}
         </> :
-        <div className={`border ${Object.keys(mainProduct).length <1 ? 'hidden': 'flex'} items-center justify-center h-[55vh]`}>
+        <div className={`flex items-center  justify-center h-[55vh] max-w-2xl mx-auto`}>
           <CreateAccMSG />
         </div> 
-      }
+      } 
     </div>
   )
 }

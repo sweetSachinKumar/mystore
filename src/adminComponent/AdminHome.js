@@ -9,7 +9,7 @@ const AdminHome = () => {
                 {/* box */}
                 <div className='p-12 shadow space-y-5  max-w-lg w-full min-w-full'>
                     <div >
-                        <span className='text-sm sm:text-base md:text-xl'>Admin Name: </span> <span className='text-sm sm:text-base md:text-xl'>sachin Kumar</span>
+                        <span className='text-sm sm:text-base md:text-xl'>Admin Name: </span> <span className='text-sm uppercase sm:text-base md:text-xl'>sachin Kumar</span>
                     </div>
                     <div>
                         <span className='text-sm sm:text-base md:text-xl'>Email: </span> <span className='text-sm sm:text-base md:text-xl'>sachinstore@gmail.com</span>

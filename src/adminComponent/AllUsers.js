@@ -9,7 +9,7 @@ const AllUsers = () => {
     const userData = useSelector(state => state.auth.allUserData)
     const dispatch = useDispatch()
 
-
+console.log(userData)
 
     let allLengthDT = Math.ceil(userData?.dataLength/12)
 

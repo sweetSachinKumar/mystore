@@ -34,23 +34,23 @@ const App = () => {
   const dispatch = useDispatch()
   
   
-  const userData = useSelector(state => state.auth.user)
+  // const userData = useSelector(state => state.auth.user)
   const vender = useSelector(state => state.auth.vender)
 
 
 
     
-  if (userData.hasOwnProperty("email")) {
-    if (userData?.email === "sachinstore@gmail.com") {
-      dispatch(setVender())
-    } else {
-      dispatch(removeVender())
+  // if (userData.hasOwnProperty("email")) {
+  //   if (userData?.email === "sachinstore@gmail.com") {
+  //     dispatch(setVender())
+  //   } else {
+  //     dispatch(removeVender())
     
-    }
+  //   }
 
-  }
+  // }
 
-  console.log(vender)
+  // console.log(vender)
 
 
 
@@ -85,9 +85,6 @@ const App = () => {
 
  
 
-  useEffect(() => {
-    dispatch(getaUserData())
-  }, [])
 
   return (
     <div>

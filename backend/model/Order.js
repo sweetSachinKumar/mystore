@@ -46,9 +46,10 @@ const orderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    payment: {
-        type:Boolean,
-        default:false
+    payment : {
+        type:String,
+        required:true,
+        default: "Pay on delevery"
     }
     
 })
